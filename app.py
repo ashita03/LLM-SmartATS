@@ -22,9 +22,9 @@ def input_pdf_text(uploaded_file):
         text+=str(page.extract_text())
     return text
 
-#Prompt Template
+#Prompt Template to match the resume to the job description
 
-input_prompt="""
+input_prompt_resume_match="""
 Hey, act like a skilled or very experienced ATS (Application Tracking System) with a deep understanding of tech field, software engineering, data science , data analyst and big data engineer. 
 You must keep in mind that the market is extremely competitive, and therefore would require a great resume to match the jd. 
 You must evaluate the resume and the job description to provide recommendations on how the resume can be improved based on the jd, what needs to be added, what percent of the skills match with the jd.
@@ -35,6 +35,16 @@ description:{jd}
 I want the response structured as a conversational output which should include the percentage of match between the resume and the jd, the missing skills based on the jd, and the summary of the profile for the jd
 """
 
+#Prompt Template to get a cover letter
+
+input_prompt_cover_letter_request = """
+Imagine yourself as a skilled cover letter writer who provides unqiue cover letters for different roles and responsibilities. Based on the jd and resume, write a cover letter which would highlight the skills needed for the role.
+resume:{text}
+description:{jd}
+I want the response to be in a letter format and very professionally formatted. Include work experience and projects from the resume and compare how well it fits the jd.
+"""
+
+
 ## streamlit app
 st.title("Smart ATS")
 st.text("Improve Your Resume ATS")
@@ -43,8 +53,16 @@ uploaded_file=st.file_uploader("Upload Your Resume",type="pdf",help="Please upla
 
 submit = st.button("Submit")
 
+cover = st.button("Write a Cover letter")
+
 if submit:
     if uploaded_file is not None:
         text=input_pdf_text(uploaded_file)
-        response=get_gemini_repsonse(input_prompt)
+        response=get_gemini_repsonse(input_prompt_resume_match)
+        st.subheader(response)
+        
+if cover:
+    if uploaded_file is not None:
+        text=input_pdf_text(uploaded_file)
+        response=get_gemini_repsonse(input_prompt_cover_letter_request)
         st.subheader(response)
