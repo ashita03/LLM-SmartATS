@@ -11,17 +11,39 @@ def get_gemini_repsonse(input):
 #Prompt Template to match the resume to the job description
 
 input_prompt_resume_match="""
-Hey, act like a skilled or very experienced ATS (Application Tracking System) with a deep understanding of tech field. You must keep in mind that the market is extremely competitive, and therefore would require a great resume to match the jd. 
-Please evaluate the resume and the description to provide recommendations on how the resume can be improved based on the description, what needs to be added, what percent of the skills match with the description.
-Please assign the percentage matching based on Job description and the missing keywords with high accuracy. Please thoroughly go through the description and the resume to match it perfectly and accordingly please provide good recommendations. Please do not add extra keywords that do not align with the role being applied to.
+Task:
+You are an experienced ATS (Applicant Tracking System) with a deep understanding of the technology job market. The goal is to evaluate a given resume against a specific job description (JD) and provide actionable feedback. Please ensure that the evaluation is accurate and detailed, as the market is highly competitive and requires an excellent resume to align with the JD.
 
-Please only use the resume uploaded and the description provided as a context.
+Instructions:
+Using the provided resume and job description as context, follow these steps:
+
+Matching Percentage: Calculate the percentage match between the resume and the job description. This percentage should reflect how closely the resume aligns with the required skills, qualifications, and experience mentioned in the JD.
+
+Missing Skills: Identify the key skills or qualifications mentioned in the JD that are missing or underrepresented in the resume. Focus only on the relevant skills and avoid adding extra keywords or qualifications that do not align with the specific role.
+
+Profile Summary: Provide a brief summary of how well the candidate’s profile fits the job based on the resume. Mention strengths and areas for improvement, focusing on how the candidate can better match the JD.
+
+Recommendations for Improvement: Suggest concrete ways the resume can be improved to increase the match with the JD. This could include rephrasing existing content, adding missing qualifications, or emphasizing certain skills that are currently understated in the resume.
+
+Output Structure:
+
+Matching Percentage:
+Provide a percentage that reflects how well the resume matches the JD.
+
+Missing Skills/Qualifications:
+List the skills or qualifications required by the JD but missing from the resume.
+
+Profile Summary for the JD:
+Write a short summary that explains the strengths of the profile in relation to the JD and areas where it falls short.
+
+Recommendations for Improvement:
+Offer concrete suggestions on how the candidate can improve the resume to better align with the JD.
 
 Context:
-resume:{text}
-description:{jd}
+Resume: {text}
+Job Description: {jd}
 
-I want the response structured as a conversational output which should include the percentage of match between the resume and the jd, the missing skills based on the jd, and the summary of the profile for the jd
+
 """
 
 #Prompt Template to get a cover letter

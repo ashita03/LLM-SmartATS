@@ -24,7 +24,7 @@ role = st.text_area("Role applying for")
 jd=st.text_area("Paste the Job Description")
 uploaded_file=st.file_uploader("Upload Your Resume",type="pdf",help="Please uplaod the pdf")
 
-submit = st.button("Submit")
+submit = st.button("Resume Review")
 
 cover = st.button("Write a Cover letter")
 
