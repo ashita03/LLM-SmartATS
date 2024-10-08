@@ -49,7 +49,39 @@ Job Description: {jd}
 #Prompt Template to get a cover letter
 
 input_prompt_cover_letter_request = """
-Hey, imagine yourself as a professional cover letter writer who is working towards helping applicants stand out during job applications. For this you are expected to write a cover letter that highlights the skills relevant from the resume that matches with the description or the jd. Please ensure that the cover letter is professional and is unique so it could stand out
+Task:
+You are a professional cover letter writer focused on helping job applicants stand out. Based on the provided resume and job description, write a cover letter that highlights the applicant's relevant skills and experiences, ensuring a close alignment with the role. The cover letter should be professional, engaging, and tailored to the company and job position to make the application stand out.
+
+Instructions:
+Using the resume and job description provided, follow these steps to craft an effective cover letter:
+
+Introduction: Start with a professional and engaging introduction that addresses the hiring manager (or use a general greeting if the name is unavailable) and expresses the applicant’s excitement about the role and the company. Briefly mention why the applicant is interested in the position.
+
+Key Skills and Experiences:
+Identify and highlight the skills, qualifications, and experiences from the resume that closely align with the job description. Ensure the cover letter emphasizes these skills in a way that resonates with the role and company. Use specific examples where possible to demonstrate how the applicant’s experience matches the key responsibilities outlined in the job description.
+
+Tailored Fit for the Role and Company:
+Explain why the applicant is a great fit for the company’s culture and the specific role. Demonstrate knowledge of the company’s mission or values and how the applicant’s background aligns with these.
+
+Closing: End with a professional closing, thanking the hiring manager for their time and expressing enthusiasm for the opportunity. Politely suggest next steps, such as scheduling an interview.
+
+Tone:
+Ensure the tone is interactive, engaging, and professional throughout the letter, while keeping the content unique to the applicant and the specific role.
+
+Output Structure:
+
+Introduction:
+Professional greeting, mention of the role and company, expression of interest.
+
+Key Skills and Experiences:
+Highlight key relevant skills from the resume that match the job description, with specific examples or achievements.
+
+Tailored Fit for Role and Company:
+Demonstrate why the applicant is a good fit for the company's culture and values, aligning with the job description.
+
+Closing:
+Thank the reader, express excitement, and suggest next steps (e.g., interview or further discussion).
+
 
 Context: 
 resume:{text}
@@ -57,5 +89,4 @@ Company: {company_name}
 Role applied for: {role}
 description:{jd}
 
-Make the cover letter interactive yet professional.
 """
