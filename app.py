@@ -40,7 +40,7 @@ if submit:
         prompt = input_prompt_resume_match.format(text=text, jd=jd)
         
         # Get the response from Gemini model
-        response = get_gemini_response(input_prompt_resume_match)
+        response = get_gemini_response(prompt)
         
         # Display the response in the app
         st.subheader("Resume Review Results")
@@ -58,7 +58,7 @@ if cover:
         prompt = input_prompt_cover_letter_request.format(text=text, company_name=company_name, role=role, jd=jd)
         
         # Get the response from Gemini model
-        response = get_gemini_response(input_prompt_cover_letter_request)
+        response = get_gemini_response(prompt)
         
         # Display the cover letter in the app
         st.subheader("Generated Cover Letter")
