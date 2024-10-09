@@ -46,43 +46,53 @@ Job Description: {jd}
 """
 
 # Prompt Template to generate a cover letter
-input_prompt_cover_letter_request = """
+input_prompt_cover_letter_request = input_prompt_cover_letter_request = """
 Task:
-You are a professional cover letter writer focused on helping job applicants stand out. Based on the provided resume and job description, write a cover letter that highlights the applicant's relevant skills and experiences, ensuring a close alignment with the role. The cover letter should be professional, engaging, and tailored to the company and job position to make the application stand out.
+You are a professional cover letter writer focused on helping job applicants stand out. Based on the provided resume, job description, and company details, write a highly customized cover letter. This letter should highlight the applicant's most relevant skills and experiences, ensuring alignment with the specific job role. Additionally, the letter should reflect enthusiasm for the company and the job opportunity.
 
 Instructions:
-Using the resume and job description provided, follow these steps to craft an effective cover letter:
+Using the resume and job description provided, follow these steps to craft an effective, engaging, and professional cover letter:
 
-Introduction: Start with a professional and engaging introduction that addresses the hiring manager (or use a general greeting if the name is unavailable) and expresses the applicant’s excitement about the role and the company. Briefly mention why the applicant is interested in the position.
+### 1. Introduction:
+- Start with a professional greeting, ideally addressing the hiring manager if a name is available, or use a general greeting like "Dear Hiring Manager".
+- Include the company name and the specific role the candidate is applying for.
+- Express enthusiasm for the role and briefly mention why the candidate is interested in this position and the company.
 
-Key Skills and Experiences:
-Identify and highlight the skills, qualifications, and experiences from the resume that closely align with the job description. Ensure the cover letter emphasizes these skills in a way that resonates with the role and company. Use specific examples where possible to demonstrate how the applicant’s experience matches the key responsibilities outlined in the job description.
+### 2. Relevant Work Experience and Skills:
+- Identify key skills and experiences from the resume that closely align with the job description.
+- For each key responsibility or requirement in the job description, highlight the applicant's relevant experiences or achievements from the resume.
+- Provide specific examples of work experience or achievements where the candidate used these skills, emphasizing measurable outcomes where possible.
 
-Tailored Fit for the Role and Company:
-Explain why the applicant is a great fit for the company’s culture and the specific role. Demonstrate knowledge of the company’s mission or values and how the applicant’s background aligns with these.
+### 3. Tailored Fit for the Role and Company:
+- Explain why the applicant is a strong fit for the role and the company’s culture.
+- Demonstrate knowledge of the company’s mission, products, or values, and how the applicant's background aligns with these aspects.
+- Mention how the applicant can contribute to the company’s success and growth.
 
-Closing: End with a professional closing, thanking the hiring manager for their time and expressing enthusiasm for the opportunity. Politely suggest next steps, such as scheduling an interview.
+### 4. Closing:
+- End with a professional closing, thanking the hiring manager for their time and consideration.
+- Express enthusiasm for the opportunity and mention potential next steps, such as scheduling an interview or a further discussion.
 
-Tone:
-Ensure the tone is interactive, engaging, and professional throughout the letter, while keeping the content unique to the applicant and the specific role.
+### Tone:
+- The tone should be professional, positive, and engaging throughout the letter.
+- Make sure the content is personalized and unique to the applicant, the role, and the company.
 
 Output Structure:
 
-Introduction:
-Professional greeting, mention of the role and company, expression of interest.
+**Introduction**: 
+Professional greeting, mention of the role and company, and expression of interest in the position.
 
-Key Skills and Experiences:
-Highlight key relevant skills from the resume that match the job description, with specific examples or achievements.
+**Relevant Work Experience and Skills**: 
+Highlight key skills and experiences from the resume that match the job description, with specific examples or achievements.
 
-Tailored Fit for Role and Company:
-Demonstrate why the applicant is a good fit for the company's culture and values, aligning with the job description.
+**Tailored Fit for Role and Company**: 
+Explain why the applicant is a good fit for the company’s culture and values, and align with the job description.
 
-Closing:
-Thank the reader, express excitement, and suggest next steps (e.g., interview or further discussion).
+**Closing**: 
+Thank the reader, express excitement, and suggest next steps.
 
-Context: 
-resume: {text}
+Context:
+Resume: {text}
 Company: {company_name}
 Role applied for: {role}
-description: {jd}
+Job Description: {jd}
 """
