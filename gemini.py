@@ -1,16 +1,17 @@
 import os
 import google.generativeai as genai
 
+# Configure the Gemini API with the API key from environment variables
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
-def get_gemini_repsonse(input):
-    model=genai.GenerativeModel('gemini-pro')
-    response=model.generate_content(input)
+# Function to get the response from the Gemini model
+def get_gemini_response(input_text):
+    model = genai.GenerativeModel('gemini-pro')
+    response = model.generate_content(input_text)
     return response.text
 
-#Prompt Template to match the resume to the job description
-
-input_prompt_resume_match="""
+# Prompt Template to match the resume to the job description
+input_prompt_resume_match = """
 Task:
 You are an experienced ATS (Applicant Tracking System) with a deep understanding of the technology job market. The goal is to evaluate a given resume against a specific job description (JD) and provide actionable feedback. Please ensure that the evaluation is accurate and detailed, as the market is highly competitive and requires an excellent resume to align with the JD.
 
@@ -42,12 +43,9 @@ Offer concrete suggestions on how the candidate can improve the resume to better
 Context:
 Resume: {text}
 Job Description: {jd}
-
-
 """
 
-#Prompt Template to get a cover letter
-
+# Prompt Template to generate a cover letter
 input_prompt_cover_letter_request = """
 Task:
 You are a professional cover letter writer focused on helping job applicants stand out. Based on the provided resume and job description, write a cover letter that highlights the applicant's relevant skills and experiences, ensuring a close alignment with the role. The cover letter should be professional, engaging, and tailored to the company and job position to make the application stand out.
@@ -82,11 +80,9 @@ Demonstrate why the applicant is a good fit for the company's culture and values
 Closing:
 Thank the reader, express excitement, and suggest next steps (e.g., interview or further discussion).
 
-
 Context: 
-resume:{text}
+resume: {text}
 Company: {company_name}
 Role applied for: {role}
-description:{jd}
-
+description: {jd}
 """
