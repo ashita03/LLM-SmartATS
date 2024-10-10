@@ -17,8 +17,9 @@ def input_pdf_text(uploaded_file):
 load_dotenv()
 
 # Streamlit App
-st.title("Smart ATS")
-st.text("Improve Your Resume for ATS")
+st.title("👋🏻 Smart Applications ")
+st.subheader("Your one stop place for applications help!")
+st.info("Use this page to upload your resume, company and the respective role being applied to, the job description. Based on these, you can choose whether you would you to get a 'Resume Review' or a 'Cover Letter'", icon="ℹ️",)
 
 # Input fields
 company_name_entry = st.text_area("Company applying to")
