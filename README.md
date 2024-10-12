@@ -1,4 +1,4 @@
-# 🚀 Smart Applications - AI Resume & Cover Letter Generator
+# Smart Applications - AI Resume & Cover Letter Generator
 
 Smart Applications is a Streamlit-based web application designed to help job seekers improve their resumes and generate professional cover letters using AI. This project allows users to upload their resumes and receive actionable feedback for resume improvement or generate a customized cover letter for specific job applications.
 
