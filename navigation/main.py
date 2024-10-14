@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 load_dotenv() 
 
 # Streamlit App
-st.title("👋🏻 Smart Applications ")
+st.title("👋🏻 AI - Smart Applications ")
 st.subheader("Your one stop place for applications help!")
 st.info("Use this page to upload your resume, company and the respective role being applied to, the job description. Based on these, you can choose whether you would you to get a 'Resume Review' or a 'Cover Letter'", icon="ℹ️",)
 
