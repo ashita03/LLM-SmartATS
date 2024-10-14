@@ -22,8 +22,9 @@ st.text_area("There are navigation pages to the left wherein you can choose what
 st.markdown("### Features Available ")
 st.markdown("""
             - Resume Review: This feature helps you assess your resume against a specific job description. It provides you with a detailed score and actionable feedback.
-            - Cover Letter Generator: This feature generates a cover letter based on your resume and the company you are applying to. It includes the company name, role, and job description.
             - Resume Analysis: This feature analyzes your resume to identify any potential areas for improvement.
+            - Cover Letter Generator: This feature generates a cover letter based on your resume and the company you are applying to. It includes the company name, role, and job description.
+            - Networking: This feature provides you with a well-drafted email to shoot to the hiring manager
             """)
 
 
