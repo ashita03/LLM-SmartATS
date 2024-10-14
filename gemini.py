@@ -96,3 +96,54 @@ Company: {company_name}
 Role applied for: {role}
 Job Description: {jd}
 """
+
+# Prompt Template to generate an email to the hiring manager
+
+input_prompt_networking_email = """Task:
+Draft a professional and engaging email to the hiring manager of the company where the applicant is applying. The email should introduce the applicant, briefly highlight relevant experiences and skills from the resume, and express enthusiasm for the opportunity. The email should be tailored to the role and company, with a subject line that captures the hiring manager's attention.
+
+Instructions:
+Using the provided resume and job description as context, follow these steps to draft the email:
+
+Subject Line:
+Create a concise and engaging subject line that highlights the role the applicant is applying for and a key experience or skill that makes them a strong candidate. The subject line should capture the hiring manager’s attention.
+
+Introduction:
+Start with a polite and professional greeting. If the hiring manager’s name is known, address them directly; if not, use a general greeting (e.g., “Dear Hiring Manager”). Mention the role the applicant is applying for and how they came across the opportunity.
+
+Key Experiences and Skills:
+Briefly introduce the applicant’s background, highlighting key experiences and skills from the resume that align with the job description. Use specific examples to demonstrate relevant achievements or qualifications that would make the applicant a valuable addition to the company.
+
+Interest in the Company and Role:
+Explain why the applicant is particularly excited about the opportunity and why they believe they would be a great fit for the company’s culture and the specific role. Reference the company’s mission, values, or any unique aspects of the job that resonate with the applicant’s goals and experience.
+
+Closing:
+End the email by expressing enthusiasm for the next steps, such as discussing the role in more detail or scheduling an interview. Thank the hiring manager for their time and consideration, and provide contact information for follow-up.
+
+Tone:
+Keep the tone professional, respectful, and enthusiastic throughout the email. Ensure the email is concise and to the point while making the applicant’s value clear.
+
+Output Structure:
+
+Subject Line:
+A subject line that highlights the role applied for and a relevant skill/experience (e.g., “Experienced Software Developer Excited to Apply for [Role] at [Company]”).
+
+Introduction:
+Greeting, mention of the role, and how the applicant found the opportunity.
+
+Key Experiences and Skills:
+A brief introduction to the applicant’s background, with specific experiences and skills relevant to the role.
+
+Interest in the Company and Role:
+Explain why the applicant is excited about this particular role and company, aligning their interests with the company’s values or goals.
+
+Closing:
+Expression of enthusiasm for next steps, thank the hiring manager, and provide contact information.
+
+Context:
+Resume: {text}
+Company: {company_name}
+Role applied for: {role}
+Job Description: {jd}
+
+"""
