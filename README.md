@@ -28,7 +28,14 @@ Smart Applications is a Streamlit-based web application designed to help job see
 * Navigate to "Cover Letter" in the sidebar.
 * Enter the company name, the role you’re applying for, and paste the job description.
 * Upload your resume (PDF format).
-* The app will generate a professional cover letter based on the input provided.##
+* The app will generate a professional cover letter based on the input provided.
+
+#### Cold Email drafting:
+
+* Choose 'Networking' and provide the necessary details as requested by the app.
+* As an output of this feature, you'll have an email drafted per the job description, role, and company applied to with alignement to your work experience
+
+
 
 
  
