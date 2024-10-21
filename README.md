@@ -6,6 +6,7 @@ Smart Applications is a Streamlit-based web application designed to help job see
 
 * 📄 Resume Review: Upload a PDF resume and receive AI-based feedback on how to improve it.
 * ✍🏻 Cover Letter Generator: Automatically generate a customized cover letter tailored to a specific job description.
+* 👩‍💻 Networking (Email Generator): Drafts an email that elaborates skills and experience relevant to the role applying to. This can be used to reach out to recruiters or other organization members.
 * 🔄 Multipage App: Navigate between different features (Resume Review, Cover Letter Generator) easily using the sidebar.
 * 🛠 AI-Powered: Uses state-of-the-art AI to analyze resumes and generate cover letters.
 
