@@ -34,3 +34,6 @@ if submit:
         # Display the response in the app
         st.subheader("Resume Review Results")
         st.write(response)
+        
+    else:
+        st.error("Please fill in both the Job Description and upload your resume.")

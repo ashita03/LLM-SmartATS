@@ -41,3 +41,6 @@ if cover:
         # Display the cover letter in the app
         st.subheader("Generated Cover Letter")
         st.write(response)
+        
+    else:
+        st.error("Please fill in all the required fields.")
