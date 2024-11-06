@@ -100,7 +100,7 @@ Job Description: {jd}
 # Prompt Template to generate an email to the hiring manager
 
 input_prompt_networking_email = """Task:
-Draft a professional and engaging email to the hiring manager of the company where the applicant is applying. The email should introduce the applicant, briefly highlight relevant experiences and skills from the resume, and express enthusiasm for the opportunity. The email should be tailored to the role and company, with a subject line that captures the hiring manager's attention.
+Draft a professional and engaging, short yet crisp email to the hiring manager of the company where the applicant is applying. The email should introduce the applicant, briefly highlight relevant experiences and skills from the resume, and express enthusiasm for the opportunity. The email should be tailored to the role and company, with a subject line that captures the hiring manager's attention. The Email should not be too long and should be engaging in a professional manner
 
 Instructions:
 Using the provided resume and job description as context, follow these steps to draft the email:
