@@ -46,7 +46,7 @@ Job Description: {jd}
 """
 
 # Prompt Template to generate a cover letter
-input_prompt_cover_letter_request = input_prompt_cover_letter_request = """
+input_prompt_cover_letter_request = """
 Task:
 You are a professional cover letter writer focused on helping job applicants stand out. Based on the provided resume, job description, and company details, write a highly customized cover letter. This letter should highlight the applicant's most relevant skills and experiences, ensuring alignment with the specific job role. Additionally, the letter should reflect enthusiasm for the company and the job opportunity.
 
