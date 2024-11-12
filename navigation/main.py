@@ -8,7 +8,6 @@ from db_utils import (
     get_user_applications,
 )
 from db_schema import SessionLocal, Resume, User
-from datetime import datetime
 import pdfplumber
 import io
 
@@ -16,34 +15,15 @@ import io
 load_dotenv()
 init_session_state()
 
-# Prompt for email input
-def prompt_email():
-    if st.session_state.user_email is None:
-        email = st.text_input(" 📧 Enter your email to login or register:")
+# Ensure session variables are initialized
+if 'user_email' not in st.session_state:
+    st.session_state.user_email = None
+if 'user_id' not in st.session_state:
+    st.session_state.user_id = None
 
-        if email:
-            db = SessionLocal()
-            try:
-                user = db.query(User).filter_by(email=email).first()
-                if user:  # User exists in the database
-                    st.session_state.user_email = user.email
-                    st.session_state.user_id = user.id
-                    st.success("Logged in successfully!")
-                else:
-                    st.write("New user detected. Please register by providing the following information.")
-                    first_name = st.text_input("First Name:")
-                    last_name = st.text_input("Last Name:")
-                    
-                    if first_name and last_name:
-                        # Create a new user entry
-                        new_user = User(email=email, first_name=first_name, last_name=last_name)
-                        db.add(new_user)
-                        db.commit()
-                        st.session_state.user_email = new_user.email
-                        st.session_state.user_id = new_user.id
-                        st.success("Registered and logged in successfully!")
-            finally:
-                db.close()  # Ensure DB session is closed
+# Main content
+st.title("👋🏻 AI - Smart Applications")
+st.subheader("Your one-stop place for applications help!")
 
 def handle_resume_upload():
     """Handle resume upload and display"""
@@ -54,7 +34,6 @@ def handle_resume_upload():
         st.success(f"Current active resume: {current_resume.file_name}")
         if st.button("View Current Resume"):
             try:
-                # Display resume content as text (for a simple solution) or provide a download link
                 with pdfplumber.open(io.BytesIO(current_resume.content)) as pdf:
                     pdf_text = "\n".join(page.extract_text() for page in pdf.pages if page.extract_text())
                     st.text_area("Resume Content", pdf_text, height=300, disabled=True)
@@ -113,27 +92,57 @@ def display_application_history():
     except Exception as e:
         st.error(f"Error loading application history: {str(e)}")
 
-def main():
-    """Main application logic"""
-    # Run email prompt and exit if not logged in
-    prompt_email()
+def prompt_email():
+    """Ask user to login or register with an email and basic details"""
     if st.session_state.user_email is None:
-        st.stop()  # Stop execution to ensure no content is shown until login
+        email = st.text_input(" 📧 Enter your email to login or register:")
+        if email:
+            db = SessionLocal()
+            try:
+                # Check if the user exists in the database
+                user = db.query(User).filter_by(email=email).first()
+                if user:
+                    # User exists, store session state
+                    st.session_state.user_email = user.email
+                    st.session_state.user_id = user.id
+                    st.success("Logged in successfully!")
+                    
+                    handle_resume_upload()
+                    display_about()
+                    display_application_history()
+                else:
+                    # New user flow
+                    st.write("New user detected. Please register by providing the following information.")
+                    first_name = st.text_input("First Name:")
+                    last_name = st.text_input("Last Name:")
+                    if first_name and last_name:
+                        # Register user
+                        new_user = User(email=email, first_name=first_name, last_name=last_name)
+                        db.add(new_user)
+                        db.commit()
+                        st.session_state.user_email = new_user.email
+                        st.session_state.user_id = new_user.id
+                        st.success("Registered and logged in successfully!")
+                        handle_resume_upload()
+                        display_about()
+                        display_application_history()
+            finally:
+                db.close()  # Close database connection after use
 
-    # Display sidebar and main content after login
-    st.sidebar.success(f"Logged in as {st.session_state.user_email}")
-    if st.sidebar.button("Logout"):
-        st.session_state.user_email = None
-        st.session_state.user_id = None
-        st.experimental_rerun()
 
-    # Main content
-    st.title("👋🏻 AI - Smart Applications")
-    st.subheader("Your one-stop place for applications help!")
+
+
+prompt_email()
+# if st.session_state.user_email is None:
+#     st.stop()  # Stops execution to ensure only email prompt is shown
+
+# # Sidebar for logged-in users
+# st.sidebar.success(f"Logged in as {st.session_state.email_address}")
+# if st.sidebar.button("Logout"):
+#     st.session_state.user_email = None
+#     st.session_state.user_id = None
+#     st.experimental_rerun()
     
-    handle_resume_upload()
-    display_about()
-    display_application_history()
 
-if __name__ == "__main__":
-    main()
+
+
