@@ -1,0 +1,86 @@
+import streamlit as st
+from db_utils import init_session_state, get_or_create_user
+from db_schema import SessionLocal, Resume, User
+from datetime import datetime
+
+# Initialize session state
+init_session_state()
+
+# Prompt for email input for login or registration
+st.title("Welcome to the Job Application Portal")
+
+if st.session_state.user_email is None:
+    email = st.text_input("Enter your email to login or register:")
+
+    if email:
+        db = SessionLocal()
+        user = db.query(User).filter_by(email=email).first()
+
+        if user:  # User exists in the database
+            st.session_state.user_email = user.email
+            st.session_state.user_id = user.id
+            st.success("Logged in successfully!")
+        else:
+            st.write("New user detected. Please register by providing the following information.")
+            first_name = st.text_input("First Name:")
+            last_name = st.text_input("Last Name:")
+            
+            if first_name and last_name:
+                # Create a new user entry
+                new_user = User(email=email, first_name=first_name, last_name=last_name)
+                db.add(new_user)
+                db.commit()
+                st.session_state.user_email = new_user.email
+                st.session_state.user_id = new_user.id
+                st.success("Registered and logged in successfully!")
+
+# Main content begins after login or registration
+if st.session_state.user_email is not None:
+    st.sidebar.title("Navigation")
+    nav_selection = st.sidebar.radio("Go to", ["Applications", "Resume Review", "Cover Letter", "Cold Email"])
+
+    # Check for existing resume
+    db = SessionLocal()
+    resume_entry = db.query(Resume).filter_by(user_id=st.session_state.user_id).first()
+    
+    if not resume_entry:
+        st.write("No resume uploaded. Please upload your resume to get started.")
+        resume_file = st.file_uploader("Upload your resume (PDF format)", type="pdf")
+        
+        if resume_file:
+            # Save the resume
+            new_resume = Resume(user_id=st.session_state.user_id, content=resume_file.read(), uploaded_at=datetime.now())
+            db.add(new_resume)
+            db.commit()
+            st.success("Resume uploaded successfully!")
+
+    # Handle navigation to different pages
+    if nav_selection == "Applications":
+        st.write("Welcome to the Applications section. Here you can manage your job applications.")
+        
+    elif nav_selection in ["Resume Review", "Cover Letter", "Cold Email"]:
+        if resume_entry:
+            st.write(f"Resume found for {st.session_state.user_email}.")
+
+            # Prompt to use existing resume or upload a new one
+            use_existing_resume = st.radio("Do you want to use your current resume or upload a new one?", ("Use existing", "Upload new"))
+
+            if use_existing_resume == "Upload new":
+                new_resume_file = st.file_uploader("Upload a new resume (PDF format)", type="pdf")
+                
+                if new_resume_file:
+                    # Replace old resume with the new one
+                    resume_entry.content = new_resume_file.read()
+                    resume_entry.uploaded_at = datetime.now()
+                    db.commit()
+                    st.success("Resume updated successfully!")
+            else:
+                st.write("Using existing resume.")
+
+        # Content based on selected option
+        if nav_selection == "Resume Review":
+            st.write("Welcome to the Resume Review section.")
+        elif nav_selection == "Cover Letter":
+            st.write("Welcome to the Cover Letter section.")
+        elif nav_selection == "Cold Email":
+            st.write("Welcome to the Cold Email section.")
