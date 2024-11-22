@@ -132,7 +132,7 @@ def main():
     if st.sidebar.button("Logout"):
         st.session_state.user_email = None
         st.session_state.user_id = None
-        st.experimental_rerun()
+        st.rerun()
 
     # Main content
     st.title("👋🏻 AI - Smart Applications")
@@ -142,5 +142,7 @@ def main():
     display_about()
     display_application_history()
 
-if __name__ == "__main__":
-    main()
+main()
+
+# if __name__ == "__main__":
+#     main()
