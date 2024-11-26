@@ -1,113 +1,84 @@
-# pages/resume_review.py
 import streamlit as st
+import logging
 from utils.pdf_handler import ResumeManager, JobApplicationForm, AIService
-from gemini import input_prompt_cover_letter_request, input_prompt_networking_email, input_prompt_resume_match
+from gemini import (
+    input_prompt_cover_letter_request, 
+    input_prompt_networking_email, 
+    input_prompt_resume_match
+)
 from db_utils import save_application
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+def validate_inputs(resume_text, company_name, role, job_desc):
+    """Validate input parameters before processing"""
+    if not resume_text:
+        st.warning("Please upload your resume to continue")
+        return False
+    
+    if not all([company_name, role, job_desc]):
+        st.warning("Please provide complete job details")
+        return False
+    
+    return True
+
+def process_application(generator_func, prompt_template, save_key):
+    """Generic function to process job application tasks"""
+    try:
+        resume_text = ResumeManager.display_resume_section(st.session_state.user_email)
+        company_name, role, job_desc = JobApplicationForm.display()
+        
+        if not validate_inputs(resume_text, company_name, role, job_desc):
+            return
+        
+        with st.spinner(f"Processing {save_key.replace('_', ' ').title()}..."):
+            result = AIService.generate_content(
+                prompt_template,
+                text=resume_text,
+                company_name=company_name,
+                role=role,
+                jd=job_desc
+            )
+            
+            if result:
+                st.subheader(f"Generated {save_key.replace('_', ' ').title()}")
+                st.write(result)
+                
+                # Dynamically save application based on the task
+                save_application(
+                    st.session_state.user_email,
+                    company_name,
+                    role,
+                    job_desc,
+                    **{save_key: result}
+                )
+    
+    except Exception as e:
+        logger.error(f"Error in {save_key} processing: {e}")
+        st.error(f"An error occurred while processing {save_key}")
 
 def resume_review_page():
     st.header("📄 Resume Review")
-    
-    # Get resume text
-    resume_text = ResumeManager.display_resume_section(st.session_state.user_email)
-    
-    if not resume_text:
-        st.warning("Please upload your resume to continue")
-        return
-    
-    # Get job details
-    company_name, role, job_desc = JobApplicationForm.display()
-    
-    if all([company_name, role, job_desc]):
-        with st.spinner("Analyzing resume..."):
-            review = AIService.generate_content(
-                input_prompt_resume_match,
-                text=resume_text,
-                jd=job_desc
-            )
-            
-            if review:
-                st.subheader("Resume Review Results")
-                st.write(review)
-                
-                # Save application
-                save_application(
-                    st.session_state.user_email,
-                    company_name,
-                    role,
-                    job_desc,
-                    resume_review=review
-                )
+    process_application(
+        AIService.generate_content, 
+        input_prompt_resume_match, 
+        'resume_review'
+    )
 
-# pages/cover_letter.py
 def cover_letter_page():
     st.header("✍🏻 Cover Letter Generator")
-    
-    # Get resume text
-    resume_text = ResumeManager.display_resume_section(st.session_state.user_email)
-    
-    if not resume_text:
-        st.warning("Please upload your resume to continue")
-        return
-    
-    # Get job details
-    company_name, role, job_desc = JobApplicationForm.display()
-    
-    if all([company_name, role, job_desc]):
-        with st.spinner("Generating cover letter..."):
-            cover_letter = AIService.generate_content(
-                input_prompt_cover_letter_request,
-                text=resume_text,
-                company_name=company_name,
-                role=role,
-                jd=job_desc
-            )
-            
-            if cover_letter:
-                st.subheader("Generated Cover Letter")
-                st.write(cover_letter)
-                
-                # Save application
-                save_application(
-                    st.session_state.user_email,
-                    company_name,
-                    role,
-                    job_desc,
-                    cover_letter=cover_letter
-                )
+    process_application(
+        AIService.generate_content, 
+        input_prompt_cover_letter_request, 
+        'cover_letter'
+    )
 
-# pages/networking.py
 def networking_page():
     st.header("👩‍💻 Networking - Cold Emailing")
-    
-    # Get resume text
-    resume_text = ResumeManager.display_resume_section(st.session_state.user_email)
-    
-    if not resume_text:
-        st.warning("Please upload your resume to continue")
-        return
-    
-    # Get job details
-    company_name, role, job_desc = JobApplicationForm.display()
-    
-    if all([company_name, role, job_desc]):
-        with st.spinner("Generating networking email..."):
-            email = AIService.generate_content(
-                input_prompt_networking_email,
-                text=resume_text,
-                company_name=company_name,
-                role=role,
-                jd=job_desc
-            )
-            
-            if email:
-                st.subheader("Generated Email")
-                st.write(email)
-                
-                # Save application
-                save_application(
-                    st.session_state.user_email,
-                    company_name,
-                    role,
-                    job_desc,
-                    networking_email=email
-                )
+    process_application(
+        AIService.generate_content, 
+        input_prompt_networking_email, 
+        'networking_email'
+    )
