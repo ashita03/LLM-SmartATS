@@ -123,9 +123,10 @@ class PDFHandler:
 # components/resume_manager.py
 class ResumeManager:
     @staticmethod
+
     def display_resume_section(user_email: str) -> Optional[str]:
         """
-        Display resume management section with improved UX and error handling
+        Display resume management section with comprehensive debugging
         
         Args:
             user_email (str): User's email for resume retrieval
@@ -136,20 +137,41 @@ class ResumeManager:
         st.markdown("### 📄 Resume Management")
         
         try:
+            # Log entry point
+            logger.info(f"Displaying resume section for user: {user_email}")
+            
             current_resume = get_active_resume(user_email)
             resume_text = None
 
             if current_resume:
+                # Detailed logging of current resume
+                logger.info(f"Current resume found - Filename: {current_resume.file_name}")
+                logger.info(f"Resume content size: {len(current_resume.content)} bytes")
+                
                 st.success(f"Current active resume: {current_resume.file_name}")
                 col1, col2 = st.columns(2)
                 
                 with col1:
                     if st.button("View Current Resume"):
+                        # Enhanced text extraction with more detailed logging
                         resume_text = PDFHandler.extract_text(current_resume.content)
+                        
+                        # Log text extraction results
+                        logger.info(f"Resume text extraction result - Length: {len(resume_text)} characters")
+                        
                         if resume_text:
-                            st.text_area("Resume Content", resume_text, height=300, disabled=True)
+                            # Truncate very long text for display
+                            display_text = resume_text[:5000] + (
+                                "...\n\n[Text truncated for display]" 
+                                if len(resume_text) > 5000 else ""
+                            )
+                            st.text_area("Resume Content", display_text, height=300, disabled=True)
+                            
+                            # Debug information
+                            st.info(f"Total resume text length: {len(resume_text)} characters")
                         else:
                             st.warning("Unable to extract text from current resume")
+                            logger.warning("Resume text extraction failed")
                 
                 with col2:
                     if st.button("Replace Resume"):
@@ -159,6 +181,10 @@ class ResumeManager:
                 text, content = PDFHandler.handle_resume_upload(
                     current_resume.content if current_resume else None
                 )
+                
+                # Log upload results
+                logger.info(f"Resume upload - Text length: {len(text) if text else 0}")
+                logger.info(f"Resume upload - Content size: {len(content) if content else 0} bytes")
                 
                 if content:
                     try:
@@ -172,16 +198,23 @@ class ResumeManager:
                         st.rerun()
                     except Exception as e:
                         st.error(f"Failed to save resume: {e}")
+                        logger.error(f"Resume save error: {e}", exc_info=True)
                 
                 resume_text = text
+
+            # Final logging of resume text
+            if resume_text:
+                logger.info(f"Final resume text length: {len(resume_text)} characters")
+            else:
+                logger.warning("No resume text available")
 
             return resume_text
         
         except Exception as e:
-            logger.error(f"Resume section display error: {e}")
-            st.error("An error occurred while managing your resume")
+            logger.error(f"Comprehensive resume section error: {e}", exc_info=True)
+            st.error("An unexpected error occurred while managing your resume")
             return None
-
+    
 # components/job_form.py
 class JobApplicationForm:
     @staticmethod
