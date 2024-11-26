@@ -12,8 +12,11 @@ def init_session():
         st.session_state.is_authenticated = False
     if 'user_email' not in st.session_state:
         st.session_state.user_email = None
-    if 'user_id' not in st.session_state:
-        st.session_state.user_id = None
+    if 'user_email' not in st.session_state:
+        st.session_state.user_email = None
+    # Add this line
+    if 'replace_resume' not in st.session_state:
+        st.session_state.replace_resume = False
 
 def authenticate_user():
     if not st.session_state.is_authenticated:
@@ -24,7 +27,7 @@ def authenticate_user():
                 user = db_utils.get_or_create_user(email)
                 st.session_state.is_authenticated = True
                 st.session_state.user_email = email
-                st.session_state.user_id = user.id
+                #st.session_state.user_email = user.id
                 st.rerun()
             else:
                 st.error("Please enter a valid email address")
@@ -62,7 +65,7 @@ def main_page():
     )
     
     # Show user's applications
-    applications = db_utils.get_user_applications(st.session_state.user_id)
+    applications = db_utils.get_user_applications(st.session_state.user_email)
     if applications:
         st.subheader("Your Recent Applications")
         for app in applications:

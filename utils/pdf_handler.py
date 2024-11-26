@@ -24,6 +24,7 @@ class PDFHandler:
             st.error(f"Error extracting PDF text: {str(e)}")
             return ""
 
+    # utils/pdf_handler.py
     @staticmethod
     def handle_resume_upload(current_resume: Optional[bytes] = None) -> Tuple[Optional[str], Optional[bytes]]:
         """Handle resume upload and return extracted text and file content"""
@@ -37,19 +38,23 @@ class PDFHandler:
             try:
                 file_content = uploaded_file.read()
                 text = PDFHandler.extract_text(io.BytesIO(file_content))
+                
+                # Store filename in session state
+                st.session_state['uploaded_file_name'] = uploaded_file.name
+                
                 return text, file_content
             except Exception as e:
                 st.error(f"Error processing PDF: {str(e)}")
                 return None, None
         return None, None
 
-# components/resume_manager.py
+## components/resume_manager.py
 class ResumeManager:
     @staticmethod
-    def display_resume_section(user_id: int) -> Optional[str]:
+    def display_resume_section(user_email: int) -> Optional[str]:
         """Display resume management section and return resume text if available"""
         st.markdown("### 📄 Resume Management")
-        current_resume = get_active_resume(user_id)
+        current_resume = get_active_resume(user_email)
         resume_text = None
 
         if current_resume:
@@ -71,13 +76,13 @@ class ResumeManager:
                 current_resume.content if current_resume else None
             )
             if content:
-                save_resume(user_id, content, st.session_state.uploaded_file_name)
+                save_resume(user_email, content, st.session_state.get('uploaded_file_name', 'resume.pdf'))
                 st.success("Resume updated successfully!")
-                st.experimental_rerun()
+                st.rerun()
             resume_text = text
 
         return resume_text
-
+    
 # components/job_form.py
 class JobApplicationForm:
     @staticmethod

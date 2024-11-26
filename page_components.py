@@ -8,7 +8,7 @@ def resume_review_page():
     st.header("📄 Resume Review")
     
     # Get resume text
-    resume_text = ResumeManager.display_resume_section(st.session_state.user_id)
+    resume_text = ResumeManager.display_resume_section(st.session_state.user_email)
     
     if not resume_text:
         st.warning("Please upload your resume to continue")
@@ -31,7 +31,7 @@ def resume_review_page():
                 
                 # Save application
                 save_application(
-                    st.session_state.user_id,
+                    st.session_state.user_email,
                     company_name,
                     role,
                     job_desc,
@@ -43,7 +43,7 @@ def cover_letter_page():
     st.header("✍🏻 Cover Letter Generator")
     
     # Get resume text
-    resume_text = ResumeManager.display_resume_section(st.session_state.user_id)
+    resume_text = ResumeManager.display_resume_section(st.session_state.user_email)
     
     if not resume_text:
         st.warning("Please upload your resume to continue")
@@ -68,7 +68,7 @@ def cover_letter_page():
                 
                 # Save application
                 save_application(
-                    st.session_state.user_id,
+                    st.session_state.user_email,
                     company_name,
                     role,
                     job_desc,
@@ -80,7 +80,7 @@ def networking_page():
     st.header("👩‍💻 Networking - Cold Emailing")
     
     # Get resume text
-    resume_text = ResumeManager.display_resume_section(st.session_state.user_id)
+    resume_text = ResumeManager.display_resume_section(st.session_state.user_email)
     
     if not resume_text:
         st.warning("Please upload your resume to continue")
@@ -105,7 +105,7 @@ def networking_page():
                 
                 # Save application
                 save_application(
-                    st.session_state.user_id,
+                    st.session_state.user_email,
                     company_name,
                     role,
                     job_desc,

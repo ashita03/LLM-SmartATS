@@ -1,14 +1,31 @@
 import os
 import google.generativeai as genai
+import logging
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO, 
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 # Configure the Gemini API with the API key from environment variables
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 # Function to get the response from the Gemini model
 def get_gemini_response(input_text):
-    model = genai.GenerativeModel('gemini-pro')
-    response = model.generate_content(input_text)
-    return response.text
+    try:
+        model = genai.GenerativeModel('gemini-pro')
+        response = model.generate_content(input_text)
+        
+        # Check if the response is successfully generated
+        if not response or not response.text:
+            raise ValueError("Empty response from Gemini")
+        
+        return response.text
+    except Exception as e:
+        logging.error(f"Gemini API error: {e}")
+        return None
 
 # Prompt Template to match the resume to the job description
 input_prompt_resume_match = """
