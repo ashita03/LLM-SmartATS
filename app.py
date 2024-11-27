@@ -89,19 +89,18 @@ def main_page():
         "in the entire job application journey.",
     )
     
-    # Robust application retrieval
     try:
         applications = get_user_applications(st.session_state.user_email)
         
         if applications:
             st.subheader("Your Recent Applications")
             for app in applications:
-                with st.expander(f"{app.company_name} - {app.role}"):
-                    st.write(f"Status: {app.status or 'Not specified'}")
-                    st.write(f"Applied: {app.created_at.strftime('%Y-%m-%d') if app.created_at else 'Date not available'}")
-                    st.write(f"Resume Review: {'✓' if app.resume_review else '✗'}")
-                    st.write(f"Cover Letter: {'✓' if app.cover_letter else '✗'}")
-                    st.write(f"Networking Email: {'✓' if app.networking_email else '✗'}")
+                with st.expander(f"{app['company_name']} - {app['role']}"):
+                    st.write(f"Status: {app['status'] or 'Not specified'}")
+                    st.write(f"Applied: {app['created_at'].strftime('%Y-%m-%d') if app['created_at'] else 'Date not available'}")
+                    st.write(f"Resume Review: {'✓' if app['resume_review'] else '✗'}")
+                    st.write(f"Cover Letter: {'✓' if app['cover_letter'] else '✗'}")
+                    st.write(f"Networking Email: {'✓' if app['networking_email'] else '✗'}")
         else:
             st.info("No recent job applications found")
     

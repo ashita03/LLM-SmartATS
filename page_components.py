@@ -72,10 +72,10 @@ def validate_inputs(resume_text, company_name, role, job_desc):
     logger.info("Validating application inputs")
     
     # Detailed input checks with specific warnings
-    if not resume_text:
-        st.warning("⚠️ No resume text found. Please upload a resume first.")
-        logger.warning(" ⚠️ Resume text is empty")
-        return False
+    # if not resume_text:
+    #     st.warning("⚠️ No resume text found. Please upload a resume first.")
+    #     logger.warning(" ⚠️ Resume text is empty")
+    #     return False
     
     if not company_name:
         st.warning("⚠️ Company name is required")

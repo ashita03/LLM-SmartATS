@@ -148,15 +148,33 @@ def save_application(db, user_email, company_name, role, job_description,
 
 @handle_db_operation
 def get_user_applications(db, user_email):
-    """Get all applications for a user with caching"""
+    """Get all applications for a user with improved session handling"""
     cache_key = f"user_applications_{user_email}"
+    
+    # Check session state cache first
     if cache_key in st.session_state:
         return st.session_state[cache_key]
-        
+    
+    # Retrieve applications and explicitly load data before session closes
     applications = db.query(Application).filter(
         Application.user_email == user_email
     ).order_by(Application.created_at.desc()).all()
     
-    if applications:
-        st.session_state[cache_key] = applications
-    return applications
+    # Convert to a list of dictionaries to detach from session
+    application_dicts = [
+        {
+            'company_name': app.company_name,
+            'role': app.role,
+            'status': app.status,
+            'created_at': app.created_at,
+            'resume_review': app.resume_review,
+            'cover_letter': app.cover_letter,
+            'networking_email': app.networking_email
+        } for app in applications
+    ]
+    
+    # Store in session state
+    if application_dicts:
+        st.session_state[cache_key] = application_dicts
+    
+    return application_dicts

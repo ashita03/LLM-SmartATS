@@ -282,28 +282,38 @@ logger = logging.getLogger(__name__)
 
 class AIService:
     @staticmethod
+    @staticmethod
     def generate_content(
         prompt_template: str, 
         **kwargs
     ) -> Optional[str]:
         """
         Generate content using AI with comprehensive error handling and logging
-        
-        Args:
-            prompt_template (str): Template for generating prompt
-            **kwargs: Dynamic arguments for prompt formatting
-        
-        Returns:
-            Optional[str]: Generated content or None
         """
         max_retries = 3
         base_retry_delay = 1
+        
+        # Debug logging of input kwargs
+        logger.info("AIService generate_content - Input kwargs:")
+        for key, value in kwargs.items():
+            logger.info(f"{key}: {type(value)} - Length: {len(str(value)) if value else 'None'}")
         
         for attempt in range(max_retries):
             try:
                 # Validate prompt formatting
                 try:
+                    # Ensure all required keys are present
+                    required_keys = ['text', 'company_name', 'role', 'jd']
+                    for key in required_keys:
+                        if key not in kwargs:
+                            raise KeyError(f"Missing required key: {key}")
+                    
+                    # Format the prompt
                     prompt = prompt_template.format(**kwargs)
+                    
+                    logger.info(f"Formatted prompt length: {len(prompt)}")
+                    logger.debug(f"First 1000 characters of prompt: {prompt[:1000]}")
+                
                 except KeyError as e:
                     logger.error(f"Missing required key for prompt: {e}")
                     st.error(f"Invalid prompt configuration: {e}")
@@ -318,7 +328,7 @@ class AIService:
                 return response
             
             except Exception as e:
-                logger.error(f"Content generation attempt {attempt + 1} failed: {e}")
+                logger.error(f"Content generation attempt {attempt + 1} failed: {e}", exc_info=True)
                 
                 if attempt < max_retries - 1:
                     # Exponential backoff
