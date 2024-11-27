@@ -30,24 +30,45 @@ class PDFHandler:
                 pdf_file = file_or_bytes
             
             with pdfplumber.open(pdf_file) as pdf:
-                # Extract text with error checking
-                extracted_pages = [
-                    page.extract_text() for page in pdf.pages 
-                    if page.extract_text() is not None
-                ]
+                # More detailed logging
+                logger.info(f"PDF has {len(pdf.pages)} pages")
+                
+                # Extract text with more robust error checking
+                extracted_pages = []
+                for page_num, page in enumerate(pdf.pages, 1):
+                    try:
+                        page_text = page.extract_text()
+                        if page_text:
+                            extracted_pages.append(page_text)
+                        else:
+                            logger.warning(f"No text found on page {page_num}")
+                    except Exception as page_error:
+                        logger.error(f"Error extracting text from page {page_num}: {page_error}")
                 
                 # Join non-empty pages
                 text = "\n".join(extracted_pages)
                 
-                if not text:
-                    logger.warning("No text extracted from PDF")
+                # More robust empty text handling
+                if not text or text.isspace():
+                    logger.warning("No meaningful text extracted from PDF")
+                    # Additional diagnostic information
+                    logger.info(f"Total pages: {len(pdf.pages)}")
+                    logger.info(f"Extracted page count: {len(extracted_pages)}")
                     return ""
                 
+                logger.info(f"Successfully extracted text - Length: {len(text)} characters")
                 return text
         
         except Exception as e:
-            logger.error(f"PDF text extraction error: {e}")
-            st.error(f"Error extracting PDF text: {str(e)}")
+            logger.error(f"Comprehensive PDF text extraction error: {e}", exc_info=True)
+            st.error(f"Critical error extracting PDF text: {str(e)}")
+            # Include more diagnostic information
+            if 'file_or_bytes' in locals():
+                try:
+                    logger.info(f"File/Bytes type: {type(file_or_bytes)}")
+                    logger.info(f"File/Bytes length: {len(file_or_bytes) if hasattr(file_or_bytes, '__len__') else 'N/A'}")
+                except Exception:
+                    pass
             return ""
 
     @staticmethod
@@ -207,9 +228,26 @@ class ResumeManager:
                 logger.info(f"Final resume text length: {len(resume_text)} characters")
             else:
                 logger.warning("No resume text available")
-
-            return resume_text
-        
+                
+            if current_resume:
+                logger.info(f"Current resume found - Filename: {current_resume.file_name}")
+                logger.info(f"Resume content size: {len(current_resume.content)} bytes")
+                
+                # Debug: Verify content
+                logger.info(f"First 100 bytes of content: {current_resume.content[:100]}")
+                
+                # More robust text extraction
+                resume_text = PDFHandler.extract_text(current_resume.content)
+                
+                logger.info(f"Resume text extraction result - Length: {len(resume_text)} characters")
+                
+                # More detailed condition checking
+                if not resume_text or resume_text.isspace():
+                    logger.warning("No readable text found in resume")
+                    st.warning("Unable to extract text from your resume. Please check the PDF.")
+                
+                return resume_text
+            
         except Exception as e:
             logger.error(f"Comprehensive resume section error: {e}", exc_info=True)
             st.error("An unexpected error occurred while managing your resume")
@@ -282,7 +320,7 @@ logger = logging.getLogger(__name__)
 
 class AIService:
     @staticmethod
-    @staticmethod
+
     def generate_content(
         prompt_template: str, 
         **kwargs
@@ -292,6 +330,18 @@ class AIService:
         """
         max_retries = 3
         base_retry_delay = 1
+            # Validate input thoroughly
+        def validate_input(value):
+            return value and len(str(value).strip()) > 0
+
+        # Check if critical inputs are present and non-empty
+        required_keys = ['text', 'company_name', 'role', 'jd']
+        missing_keys = [key for key in required_keys if not validate_input(kwargs.get(key))]
+        
+        if missing_keys:
+            logger.error(f"Missing or empty required keys: {missing_keys}")
+            st.error(f"Missing required inputs: {', '.join(missing_keys)}")
+            return None
         
         # Debug logging of input kwargs
         logger.info("AIService generate_content - Input kwargs:")
