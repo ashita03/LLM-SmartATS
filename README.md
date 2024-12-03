@@ -1,6 +1,6 @@
 # Smart Applications - using Google Gemini
 
-Smart Applications is a Streamlit-based web application designed to help job seekers improve their resumes and generate professional cover letters using AI. This project allows users to upload their resumes and receive actionable feedback for resume improvement or generate a customized cover letter for specific job applications.
+Smart Applications is a Streamlit-based web application designed to help job seekers improve their resumes, generate professional cover letters using AI and draft emails to get their profiles noticed. This project allows users to upload resumes and receive actionable feedback for resume improvement or generate a customized cover letter for specific job applications or generate email that can be shot to anybody in the company you are looking to apply to.
 
 ## Features
 
@@ -28,12 +28,12 @@ Smart Applications is a Streamlit-based web application designed to help job see
 
 * Navigate to "Cover Letter" in the sidebar.
 * Enter the company name, the role you’re applying for, and paste the job description.
-* Upload your resume (PDF format).
+* Upload a new resume (PDF format) or use the previous one
 * The app will generate a professional cover letter based on the input provided.
 
 #### Cold Email drafting:
 
-* Choose 'Networking' and provide the necessary details as requested by the app.
+* Choose 'Networking' and provide the necessary details as the app requests.
 * As an output of this feature, you'll have an email drafted per the job description, role, and company applied to with alignement to your work experience
 
 
