@@ -93,7 +93,7 @@ def main_page():
         applications = get_user_applications(st.session_state.user_email)
         
         if applications:
-            st.subheader("Your Recent Applications")
+            st.subheader("Your Recent Application Support")
             for app in applications:
                 with st.expander(f"{app['company_name']} - {app['role']}"):
                     st.write(f"Status: {app['status'] or 'Not specified'}")
