@@ -40,3 +40,6 @@ Smart Applications is a Streamlit-based web application designed to help job see
 ## 🔗 Link to the Deployed App
 https://llm-smartats-ai.streamlit.app/
 
+## Application Interface
+images/LLM-SmartATS-Screenshot.png
+
