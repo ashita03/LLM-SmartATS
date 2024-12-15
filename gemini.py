@@ -1,6 +1,7 @@
 import os
 import google.generativeai as genai
 import logging
+import streamlit as st
 
 # Configure logging
 logging.basicConfig(
@@ -10,7 +11,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Configure the Gemini API with the API key from environment variables
-genai.configure(api_key=os.environ.get("GOOGLE_API_KEY"))
+#genai.configure(api_key=os.environ.get("GOOGLE_API_KEY"))
+genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
 
 # Function to get the response from the Gemini model
 def get_gemini_response(input_text):
