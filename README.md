@@ -36,9 +36,6 @@ Smart Applications is a Streamlit-based web application designed to help job see
 * Choose 'Networking' and provide the necessary details as the app requests.
 * As an output of this feature, you'll have an email drafted per the job description, role, and company applied to with alignement to your work experience
 
-## Application Live Link
-https://llm-smartats.streamlit.app/
-
 ## Application Interface
 ![App main page](images/LLM-SmartATS-Screenshot.png)
 
