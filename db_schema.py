@@ -5,8 +5,14 @@ from sqlalchemy.orm import sessionmaker, relationship
 from datetime import datetime
 import os
 
+# Create the .streamlit directory if it doesn't exist
+os.makedirs('.streamlit', exist_ok=True)
+
+# Use the .streamlit directory for the SQLite database
+db_path = os.path.join('.streamlit', 'job_applications.db')
+
 # Use an absolute path for the SQLite database
-db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'job_applications.db')
+#db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'job_applications.db')
 engine = create_engine(f'sqlite:///{db_path}', echo=True)
 
 Base = declarative_base()
