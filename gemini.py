@@ -11,8 +11,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Configure the Gemini API with the API key from environment variables
-#genai.configure(api_key=os.environ.get("GOOGLE_API_KEY"))
-genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
+genai.configure(api_key=os.environ.get("GOOGLE_API_KEY"))
+#genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
 
 # Function to get the response from the Gemini model
 def get_gemini_response(input_text):
@@ -166,3 +166,43 @@ Role applied for: {role}
 Job Description: {jd}
 
 """
+
+# Prompt Template to generate bullet points for resume improvement
+
+input_prompt_resume_bullet_points = """Task:
+You are a professional resume optimizer specializing in tailoring resumes to job descriptions to maximize ATS compatibility. Your task is to enhance the bullet points within the Work Experience section of the provided resume, ensuring alignment with the given job description and role. The goal is to increase the resume’s likelihood of passing through ATS filters and securing an interview.
+
+Instructions:
+Using the resume, job description, and role provided, follow these steps to rewrite and improve each bullet point:
+
+1. Optimize for ATS Compatibility:
+Use strong action verbs to begin each bullet point (e.g., "Led," "Implemented," "Optimized").
+Incorporate keywords from the job description naturally into the bullet points.
+Follow the APR format (Action + Project/Problem + Result) to showcase impact effectively.
+Ensure bullet points remain concise, clear, and results-driven for easy ATS parsing.
+Use standard symbols (• or -) and avoid complex formatting that ATS systems may struggle with.
+2. Quantify Achievements Where Possible:
+Replace vague descriptions with measurable results (e.g., "Increased efficiency by 30%" instead of "Improved processes").
+Highlight contributions to revenue growth, cost savings, efficiency improvements, or customer satisfaction.
+Use specific figures, percentages, or timeframes to strengthen credibility.
+3. Align with the Job Description:
+Identify key responsibilities and skills from the job description.
+Tailor each bullet point to directly reflect the requirements and expectations of the role.
+Emphasize experiences that demonstrate the candidate’s ability to excel in this specific position.
+Output Structure:
+For each bullet point in the Work Experience section of the resume, provide an improved version that follows the above guidelines.
+
+Context:
+
+Resume: {text}
+Company: {company_name}
+Role Applied For: {role}
+Job Description: {jd}
+Example Before & After:
+
+Before:
+
+Managed social media accounts for the company.
+After:
+
+Increased social media engagement by 25% through a targeted content strategy and active community engagement, driving brand visibility and lead generation."""

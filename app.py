@@ -2,7 +2,7 @@
 import streamlit as st
 import logging
 from db_utils import get_or_create_user, get_user_applications
-from page_components import resume_review_page, cover_letter_page, networking_page
+from page_components import resume_review_page, cover_letter_page, networking_page, resume_bullet_page
 
 # Add proper logging
 logging.basicConfig(level=logging.INFO)
@@ -54,13 +54,14 @@ def main_app():
         st.sidebar.title("Navigation")
         page = st.sidebar.radio(
             "Go to",
-            ["Home", "Resume Review", "Cover Letter", "Networking"]
+            ["Home", "Resume Review", "Bullet Points Improvement", "Cover Letter", "Networking"]
         )
         
         # Route to appropriate page
         page_routes = {
             "Home": main_page,
             "Resume Review": resume_review_page,
+            "Bullet Points Improvement": resume_bullet_page,
             "Cover Letter": cover_letter_page,
             "Networking": networking_page
         }

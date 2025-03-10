@@ -4,7 +4,8 @@ from utils.pdf_handler import ResumeManager, JobApplicationForm, AIService
 from gemini import (
     input_prompt_cover_letter_request, 
     input_prompt_networking_email, 
-    input_prompt_resume_match
+    input_prompt_resume_match,
+    input_prompt_resume_bullet_points
 )
 from db_utils import save_application
 
@@ -114,4 +115,12 @@ def networking_page():
         AIService.generate_content, 
         input_prompt_networking_email, 
         'networking_email'
+    )
+    
+def resume_bullet_page():
+    st.header("✅ Resume Bullet Points")
+    process_application(
+        AIService.generate_content, 
+        input_prompt_resume_bullet_points, 
+        'resume_bullet_points'
     )
