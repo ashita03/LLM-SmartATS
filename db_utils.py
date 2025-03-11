@@ -128,7 +128,7 @@ def get_active_resume(db, user_email:str):
 
 @handle_db_operation
 def save_application(db, user_email, company_name, role, job_description, 
-                    cover_letter=None, networking_email=None, resume_review=None):
+                    cover_letter=None, networking_email=None, resume_review=None, resume_bullet_points=None):
     """Save application details with validation"""
     if not all([company_name, role, job_description]):
         raise ValueError("Company name, role, and job description are required")
@@ -141,6 +141,7 @@ def save_application(db, user_email, company_name, role, job_description,
         cover_letter=cover_letter,
         networking_email=networking_email,
         resume_review=resume_review,
+        resume_bullet_points=resume_bullet_points,
         status='Created'
     )
     db.add(application)

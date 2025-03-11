@@ -17,7 +17,7 @@ genai.configure(api_key=os.environ.get("GOOGLE_API_KEY"))
 # Function to get the response from the Gemini model
 def get_gemini_response(input_text):
     try:
-        model = genai.GenerativeModel('gemini-pro')
+        model = genai.GenerativeModel('models/gemini-1.5-pro')
         response = model.generate_content(input_text)
         
         # Check if the response is successfully generated
@@ -181,14 +181,18 @@ Incorporate keywords from the job description naturally into the bullet points.
 Follow the APR format (Action + Project/Problem + Result) to showcase impact effectively.
 Ensure bullet points remain concise, clear, and results-driven for easy ATS parsing.
 Use standard symbols (• or -) and avoid complex formatting that ATS systems may struggle with.
+
 2. Quantify Achievements Where Possible:
 Replace vague descriptions with measurable results (e.g., "Increased efficiency by 30%" instead of "Improved processes").
 Highlight contributions to revenue growth, cost savings, efficiency improvements, or customer satisfaction.
 Use specific figures, percentages, or timeframes to strengthen credibility.
+It is important to ensure that as far as possible achievements are quantified.
+
 3. Align with the Job Description:
 Identify key responsibilities and skills from the job description.
 Tailor each bullet point to directly reflect the requirements and expectations of the role.
-Emphasize experiences that demonstrate the candidate’s ability to excel in this specific position.
+Emphasize experiences that demonstrate the candidate’s ability to excel in this specific position. Incorporate the  key words and skills from the jd and replace it at places relevant in the bullet points within the resume.
+
 Output Structure:
 For each bullet point in the Work Experience section of the resume, provide an improved version that follows the above guidelines.
 
