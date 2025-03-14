@@ -97,16 +97,16 @@ Using the resume and job description provided, follow these steps to craft an ef
 
 Output Structure:
 
-**Introduction**: 
+Introduction: 
 Professional greeting, mention of the role and company, and expression of interest in the position.
 
-**Relevant Work Experience and Skills**: 
+Relevant Work Experience and Skills: 
 Highlight key skills and experiences from the resume that match the job description, with specific examples or achievements.
 
-**Tailored Fit for Role and Company**: 
+Tailored Fit for Role and Company: 
 Explain why the applicant is a good fit for the company’s culture and values, and align with the job description.
 
-**Closing**: 
+Closing: 
 Thank the reader, express excitement, and suggest next steps.
 
 Context:
@@ -169,44 +169,37 @@ Job Description: {jd}
 
 # Prompt Template to generate bullet points for resume improvement
 
-input_prompt_resume_bullet_points = """Task:
-You are a professional resume optimizer specializing in tailoring resumes to job descriptions to maximize ATS compatibility. Your task is to enhance the bullet points within the Work Experience section of the provided resume, ensuring alignment with the given job description and role. The goal is to increase the resume’s likelihood of passing through ATS filters and securing an interview.
+input_prompt_resume_bullet_points = """
+Task:
+Imagine yourself as an expert ATS resume viewer, and go through all of the Resume bullet points to ensure it matches with the key skills and words in the Job Description. You have to make sure that most skills and the most important keywords mentioned in the Job Description are ALL present in the Resume and additionally being highlighted. The main aim is to ensure that the Resume stands out as a Top Applicant for the respective Job Description. In order to achieve this, do not force it. 
 
 Instructions:
-Using the resume, job description, and role provided, follow these steps to rewrite and improve each bullet point:
-
 1. Optimize for ATS Compatibility:
-Use strong action verbs to begin each bullet point (e.g., "Led," "Implemented," "Optimized").
-Incorporate keywords from the job description naturally into the bullet points.
-Follow the APR format (Action + Project/Problem + Result) to showcase impact effectively.
-Ensure bullet points remain concise, clear, and results-driven for easy ATS parsing.
-Use standard symbols (• or -) and avoid complex formatting that ATS systems may struggle with.
+   - Begin each bullet point with strong action verbs (e.g., "Led," "Implemented," "Optimized").
+   - Incorporate keywords from the Job Description naturally into the bullet points.
+   - Use the APR format (Action + Project/Problem + Result) to effectively showcase the candidate’s impact.
+   - Ensure bullet points are concise, clear, and results-driven to be easily parsed by ATS.
+   - Avoid complex formatting; use standard symbols (• or -) for bullet points.
 
 2. Quantify Achievements Where Possible:
-Replace vague descriptions with measurable results (e.g., "Increased efficiency by 30%" instead of "Improved processes").
-Highlight contributions to revenue growth, cost savings, efficiency improvements, or customer satisfaction.
-Use specific figures, percentages, or timeframes to strengthen credibility.
-It is important to ensure that as far as possible achievements are quantified.
-
+   - Replace vague descriptions with measurable results (e.g., "Increased efficiency by 30%" instead of "Improved processes").
+   - Highlight key contributions such as revenue growth, cost savings, efficiency improvements, or customer satisfaction, based on the Job Description’s focus.
+   - Include specific figures, percentages, or timeframes to add credibility to achievements.
+   
 3. Align with the Job Description:
-Identify key responsibilities and skills from the job description.
-Tailor each bullet point to directly reflect the requirements and expectations of the role.
-Emphasize experiences that demonstrate the candidate’s ability to excel in this specific position. Incorporate the  key words and skills from the jd and replace it at places relevant in the bullet points within the resume.
+   - Identify key responsibilities and skills from the JD.
+   - Tailor each bullet point to directly reflect the requirements and expectations of the role.
+   - Emphasize experiences that demonstrate the candidate’s ability to excel in this position by incorporating relevant keywords and skills from the JD where appropriate.
 
 Output Structure:
-For each bullet point in the Work Experience section of the resume, provide an improved version that follows the above guidelines.
+For each bullet point in the Work Experience section of the resume, provide an improved version that follows the guidelines above.
 
 Context:
+- Resume: {text}
+- Company: {company_name}
+- Role Applied For: {role}
+- Job Description: {jd}
 
-Resume: {text}
-Company: {company_name}
-Role Applied For: {role}
-Job Description: {jd}
 Example Before & After:
-
-Before:
-
-Managed social media accounts for the company.
-After:
-
-Increased social media engagement by 25% through a targeted content strategy and active community engagement, driving brand visibility and lead generation."""
+- Before: Managed social media accounts for the company.
+- After: Increased social media engagement by 25% through a targeted content strategy and active community engagement, driving brand visibility and lead generation."""
