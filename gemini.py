@@ -171,7 +171,7 @@ Job Description: {jd}
 
 input_prompt_resume_bullet_points = """
 Task:
-Imagine yourself as an expert ATS resume viewer, and go through all of the Resume bullet points to ensure it matches with the key skills and words in the Job Description. You have to make sure that most skills and the most important keywords mentioned in the Job Description are ALL present in the Resume and additionally being highlighted. The main aim is to ensure that the Resume stands out as a Top Applicant for the respective Job Description. In order to achieve this, do not force it. Maintain a good balance. Based on the theme of the job description or the main project, align project points to that. Make sure to use all the keywords and skills at least once.
+Imagine yourself as an expert ATS resume viewer, and go through all of the Resume bullet points to ensure it matches with the key skills and words in the Job Description. You have to make sure that most skills and the most important keywords mentioned in the Job Description are ALL present in the Resume and additionally being highlighted. The main aim is to ensure that the Work Experience stands out as a Top Applicant for the respective Job Description. (The Resume Match with the Job Description must be '92%' or above at minimum). In order to achieve this, do not force it. Maintain a good balance. Based on the theme of the job description or the main project, align project points to that. Make sure to use all the keywords and skills at least once.
 
 Instructions:
 1. Optimize for ATS Compatibility:
