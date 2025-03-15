@@ -141,7 +141,6 @@ def save_application(db, user_email, company_name, role, job_description,
         cover_letter=cover_letter,
         networking_email=networking_email,
         resume_review=resume_review,
-        resume_bullet_points=resume_bullet_points,
         status='Created'
     )
     db.add(application)
@@ -171,7 +170,6 @@ def get_user_applications(db, user_email):
             'resume_review': app.resume_review,
             'cover_letter': app.cover_letter,
             'networking_email': app.networking_email,
-            'resume_bullet_point': app.resume_bullet_points
         } for app in applications
     ]
     
