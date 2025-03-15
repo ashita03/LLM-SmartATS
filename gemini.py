@@ -190,6 +190,8 @@ Instructions:
    - Identify key responsibilities and skills from the JD.
    - Tailor each bullet point to directly reflect the requirements and expectations of the role.
    - Emphasize experiences that demonstrate the candidate’s ability to excel in this position by incorporating relevant keywords and skills from the JD where appropriate.
+   
+4. Mention how the changes made help align with the Job Description better for each resume bullet point. This will ensure that it can be kept out of the actual bullet point
 
 Output Structure:
 For each bullet point in the Work Experience section of the resume, provide an improved version that follows the guidelines above.

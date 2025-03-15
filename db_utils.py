@@ -170,7 +170,8 @@ def get_user_applications(db, user_email):
             'created_at': app.created_at,
             'resume_review': app.resume_review,
             'cover_letter': app.cover_letter,
-            'networking_email': app.networking_email
+            'networking_email': app.networking_email,
+            'resume_bullet_point': app.resume_bullet_points
         } for app in applications
     ]
     

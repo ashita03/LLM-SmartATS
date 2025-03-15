@@ -57,7 +57,7 @@ class Application(Base):
     cover_letter = Column(String)
     networking_email = Column(String)
     resume_review = Column(String)
-    resume_bullet = Column(String)
+    resume_bullet_points = Column(String)
     
     # Relationships
     user = relationship("User", back_populates="applications")
