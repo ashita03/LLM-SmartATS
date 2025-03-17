@@ -54,7 +54,7 @@ def main_app():
         st.sidebar.title("Navigation")
         page = st.sidebar.radio(
             "Go to",
-            ["Home", "Resume Review", "Bullet Points Improvement", "Cover Letter", "Networking"]
+            ["Home", "Resume Review", "Bullet Points Improvement", "Cover Letter", "Networking - Email Generation"]
         )
         
         # Route to appropriate page
@@ -63,7 +63,7 @@ def main_app():
             "Resume Review": resume_review_page,
             "Bullet Points Improvement": resume_bullet_page,
             "Cover Letter": cover_letter_page,
-            "Networking": networking_page
+            "Networking - Email Generation": networking_page
         }
         
         page_routes.get(page, main_page)()
